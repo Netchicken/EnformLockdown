@@ -2,6 +2,8 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.0</TargetFramework>
+    <AssemblyName>LockDown</AssemblyName>
+    <RootNamespace>LockDown</RootNamespace>
   </PropertyGroup>
 
 </Project>

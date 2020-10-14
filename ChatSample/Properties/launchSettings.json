@@ -15,7 +15,7 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "ChatSample": {
+    "LockDown": {
       "commandName": "Project",
       "launchBrowser": true,
       "environmentVariables": {
