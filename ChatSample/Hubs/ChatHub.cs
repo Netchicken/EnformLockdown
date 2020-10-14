@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace LockDown.Hubs
 {
-    public class ChatHub : Hub
+    public class LockDownHub : Hub
     {
         public async Task Send(string name, string message)
         {

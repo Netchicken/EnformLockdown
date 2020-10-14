@@ -29,7 +29,7 @@ namespace LockDown
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapHub<ChatHub>("/chat");
+                endpoints.MapHub<LockDownHub>("/chat");
             });
         }
     }
