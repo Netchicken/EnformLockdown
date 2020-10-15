@@ -67,8 +67,12 @@
             color: #fff;
         }
 
-        .hidden {
-            display: none;
+        scroll-container {
+            display: block;
+            width: 350px;
+            height: 200px;
+            overflow-y: scroll;
+            scroll-behavior: smooth;
         }
     </style>
 </head>
@@ -77,14 +81,17 @@
         <h1>VC LockDown Alert</h1>
         <h2 id="WarningMessageShow">warning message here</h2>
         <input type="text" onchange=hideWarningMessageAdmin() id="Name">
-        <input type="text" id="WarningMessageAdmin" display: none >
+        <input type="text" id="WarningMessageAdmin" display: none>
 
         <textarea id="message" class="textareastuff" rows="15" cols="33"></textarea><br />
         <textarea id="latestMessage" class="lastMessage" rows="5" cols="33"></textarea>
 
         <br />
         <input type="button" id="sendmessage" value="Send Message" /><br />
-        <ul id="discussion"></ul>
+
+        <scroll-container>
+            <ul id="discussion"></ul>
+        </scroll-container>
     </div>
     <!--Script references. -->
     <!--Reference the SignalR library. -->
@@ -106,10 +113,10 @@
                 console.log(name + " display hidden")
             }
 
- }
+        }
 
 
-
+        //DOMContentLoaded event – DOM is ready, so the handler can lookup DOM nodes, initialize the interface.
         document.addEventListener('DOMContentLoaded', function () {
 
             //get the messages and store to send use in  connection.invoke
@@ -122,7 +129,7 @@
             document.getElementById("Name").value = name; //pass to name input box
 
 
-           
+
             // Set initial focus to message input box.
             messageInput.focus();
 
