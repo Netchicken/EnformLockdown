@@ -5,16 +5,71 @@
     <style type="text/css">
         .container {
             background-color: #99CCFF;
-            border: thick solid #808080;
-            padding: 20px;
+            box-shadow: 0 0 15px 4px rgba(198, #5DCCD365, 65, 0.42);
+            border-radius: 10px;
+            padding-left: 20px;
+            padding-right: 20px;
+            padding-bottom: 20px;
             margin: 20px;
+        }
+
+        input[type=text] {
+           
+            padding: 10px;
+            border: 0;
+            box-shadow: 0 0 15px 4px rgba(198, 65, 65, 0.42);
+            border-radius: 10px;
+        }
+
+        input[type=textarea] {
+            margin-top: 20px;
+            margin-bottom: 20px;
+            width: 80%;
+            resize: both;
+            border-radius: 15px;
+            border: 0;
+            box-shadow: 4px 4px 10px rgba(0,0,0,0.06);
+            height: 50px;
+                    }
+
+        input[type=button] {
+            /* remove default behavior */
+            appearance: none;
+            -webkit-appearance: none;
+            /* usual styles */
+            padding: 10px;
+            border: none;
+            background-color: rgba(230, 39, 35, 0.86);
+            color: #fff;
+            font-weight: 600;
+            border-radius: 5px;
+           /* width: 100%;*/
+        }
+
+        h1 {
+            font-size: 10vw;
+            text-shadow: 4px 4px 0px #DF1610;
+            mix-blend-mode: screen;
+            animation: fadeIn 2.5s linear forwards;
+        }
+
+        @keyframes fadeIn {
+            0% {
+                opacity: 0
+            }
+
+            100% {
+                opacity: 1;
+            }
         }
     </style>
 </head>
 <body style="background-color: red">
     <div class="container">
-        <input type="text" id="message" />
-        <input type="button" id="sendmessage" value="Send" />
+        <h1>VC LockDown Alert</h1>
+        <input type="text" onchange="UpdateName" id="Name">
+        <input type="textarea" id="message" /></br>
+        <input type="button" id="sendmessage" value="Send Message" /></br>
         <ul id="discussion"></ul>
     </div>
     <!--Script references. -->
@@ -28,20 +83,36 @@
 
             // Get the user name and store it to prepend to messages.
             var name = prompt('Enter your name:', '');
+
+            document.getElementById("Name").value = name; //pass it to the input box
+
+            //update the name
+
+
+            //          function UpdateName() {
+            //name = document.getElementById("Name").value;
+            //                              }
+
+
+
+
+
+
+
             // Set initial focus to message input box.
             messageInput.focus();
 
-            // Start the connection.
+            // Start the connection. The JavaScript for SignalR relies on a few objects from the client-side libraries, such as the connection. Notice you must call the connection’s start method to actually connect.
             var connection = new signalR.HubConnectionBuilder()
                 .withUrl('/chat')
                 .build();
 
-            // Create a function that the hub can call to broadcast messages.
+            // Create a function that the hub can call to broadcast messages. The on method allows the server to call the code in it directly. Here’s where the UI is updated – in this case, simply adding messages to a list item. It’s a good practice to encode the data
             connection.on('broadcastMessage', function (name, message) {
                 // Html encode display name and message.
                 var encodedName = name;
                 var encodedMsg = message;
-                // Add the message to the page.
+                // Add the message to the page in a List Element
                 var liElement = document.createElement('li');
                 liElement.innerHTML = '<strong>' + encodedName + '</strong>:&nbsp;&nbsp;' + encodedMsg;
                 document.getElementById('discussion').appendChild(liElement);
@@ -52,7 +123,7 @@
                 .then(function () {
                     console.log('connection started');
                     document.getElementById('sendmessage').addEventListener('click', function (event) {
-                        // Call the Send method on the hub.
+                        // Call the Send method on the hub. To make calls to the server, wire up an event to a button or other UI element, capture the data you want to send, and call the invoke method
                         connection.invoke('send', name, messageInput.value);
 
                         // Clear text box and reset focus for next comment.
