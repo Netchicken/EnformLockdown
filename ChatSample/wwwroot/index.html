@@ -33,6 +33,22 @@
             height: 50px;
         }
 
+        .lastMessage {
+           /* margin-top: 10px;*/
+            margin-bottom: 10px;
+            background-color: rgba(230, 39, 35, 0.86);
+            color:antiquewhite;
+            font-weight:bolder;
+            font-size:larger;
+            width: 80%;
+            resize: both;
+            padding: 10px;
+            border: 0;
+            box-shadow: 0 0 15px 4px rgba(198, 65, 65, 0.42);
+            border-radius: 10px;
+            height: 20px;
+        }
+
         input[type=button] {
             /* remove default behavior */
             appearance: none;
@@ -57,14 +73,15 @@
         <h1>VC LockDown Alert</h1>
         <input type="text" onchange="UpdateName" id="Name">
 
-        <textarea id="message" class="textareastuff" rows="15" cols="33">
+        <textarea id="message" class="textareastuff" rows="15" cols="33"></textarea><br />
+        <textarea id="latestMessage" class="lastMessage" rows="5" cols="33"></textarea>
 
-</textarea>
+
 
 
         <!--<input type="textarea" id="message" rows="4" />-->
-        </br>
-        <input type="button" id="sendmessage" value="Send Message" /></br>
+        <br/>
+        <input type="button" id="sendmessage" value="Send Message" /><br/>
         <ul id="discussion"></ul>
     </div>
     <!--Script references. -->
@@ -81,18 +98,9 @@
 
             document.getElementById("Name").value = name; //pass it to the input box
 
-            //update the name
 
 
-            //          function UpdateName() {
-            //name = document.getElementById("Name").value;
-            //                              }
-
-
-
-
-
-
+            //let firstChild = parentElement.firstChild;
 
             // Set initial focus to message input box.
             messageInput.focus();
@@ -104,13 +112,25 @@
 
             // Create a function that the hub can call to broadcast messages. The on method allows the server to call the code in it directly. Here’s where the UI is updated – in this case, simply adding messages to a list item. It’s a good practice to encode the data
             connection.on('broadcastMessage', function (name, message) {
+
+
+                var today = new Date();
+
+                var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+
+
                 // Html encode display name and message.
                 var encodedName = name;
                 var encodedMsg = message;
                 // Add the message to the page in a List Element
                 var liElement = document.createElement('li');
-                liElement.innerHTML = '<strong>' + encodedName + '</strong>:&nbsp;&nbsp;' + encodedMsg;
-                document.getElementById('discussion').appendChild(liElement);
+                var text = document.createElement('text');
+                liElement.innerHTML = time + '&nbsp;&nbsp;<strong>' + encodedName + '</strong>:&nbsp;&nbsp;' + encodedMsg;
+                text.innerHTML =   encodedName + "   "  + encodedMsg;
+                document.getElementById('discussion').prepend(liElement);
+                document.getElementById('latestMessage').value = text.innerHTML;
+
+
             });
 
             // Transport fallback functionality is now built into start.
