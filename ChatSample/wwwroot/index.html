@@ -24,7 +24,9 @@
         .textareastuff {
             margin-top: 20px;
             margin-bottom: 20px;
-            width: 80%;
+            margin-right: 20px;
+            width:100%;
+           display:block;
             resize: both;
             padding: 10px;
             border: 0;
@@ -34,13 +36,14 @@
         }
 
         .lastMessage {
-            /* margin-top: 10px;*/
+            margin-top: 10px;
             margin-bottom: 10px;
-            background-color: rgba(230, 39, 35, 0.86);
-            color: antiquewhite;
+            margin-right: 20px;
+            background-color: antiquewhite;
+            color: rgba(230, 39, 35, 0.86);
             font-weight: bolder;
             font-size: larger;
-            width: 80%;
+            width: 100%;
             resize: both;
             padding: 10px;
             border: 0;
@@ -69,8 +72,8 @@
 
         scroll-container {
             display: block;
-            width: 350px;
-            height: 200px;
+          /*  width: 350px;*/
+            height: 100px;
             overflow-y: scroll;
             scroll-behavior: smooth;
         }
@@ -80,14 +83,14 @@
     <div class="container">
         <h1>VC LockDown Alert</h1>
         <h2 id="WarningMessageShow">warning message here</h2>
-        <input type="text" onchange=hideWarningMessageAdmin() id="Name">
-        <input type="text" id="WarningMessageAdmin" display: none>
+        <input type="text" onchange=hideWarningMessageAdmin() id="Name" value="Name">
+        <input type="text" id="WarningMessageAdmin"  hidden:true value="Add warning message">
 
-        <textarea id="message" class="textareastuff" rows="15" cols="33"></textarea><br />
-        <textarea id="latestMessage" class="lastMessage" rows="5" cols="33"></textarea>
+        <textarea id="message" class="textareastuff" rows="15"  value="Type message"></textarea><br />
 
-        <br />
+                                                                                   
         <input type="button" id="sendmessage" value="Send Message" /><br />
+<textarea id="latestMessage" class="lastMessage" rows="5" cols="33"></textarea>
 
         <scroll-container>
             <ul id="discussion"></ul>
@@ -106,10 +109,10 @@
             var warningInput = document.getElementById("WarningMessageAdmin");
             if (name == "admin") {
 
-                warningInput.style.display = "block";
+                document.getElementById("WarningMessageAdmin").hidden = false;
                 console.log(name + " display shown")
             } else {
-                warningInput.style.display = "none";
+                warningInput.hidden = true;
                 console.log(name + " display hidden")
             }
 
@@ -118,6 +121,8 @@
 
         //DOMContentLoaded event – DOM is ready, so the handler can lookup DOM nodes, initialize the interface.
         document.addEventListener('DOMContentLoaded', function () {
+
+            hideWarningMessageAdmin();
 
             //get the messages and store to send use in  connection.invoke
             var messageInput = document.getElementById('message');
