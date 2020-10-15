@@ -66,18 +66,22 @@
             padding-top: 10px;
             color: #fff;
         }
+
+        .hidden {
+            display: none;
+        }
     </style>
 </head>
 <body style="background-color: red">
     <div class="container">
         <h1>VC LockDown Alert</h1>
         <h2 id="WarningMessageShow">warning message here</h2>
-        <input type="text" onchange="UpdateName" id="Name">
-        <input type="text" id="WarningMessageAdmin">
+        <input type="text" onchange=hideWarningMessageAdmin() id="Name">
+        <input type="text" id="WarningMessageAdmin" display: none >
 
         <textarea id="message" class="textareastuff" rows="15" cols="33"></textarea><br />
         <textarea id="latestMessage" class="lastMessage" rows="5" cols="33"></textarea>
-              
+
         <br />
         <input type="button" id="sendmessage" value="Send Message" /><br />
         <ul id="discussion"></ul>
@@ -87,6 +91,25 @@
     <script type="text/javascript" src="lib/signalr.min.js"></script>
     <!--Add script to update the page and send messages.-->
     <script type="text/javascript">
+
+
+        function hideWarningMessageAdmin() {
+            var name = document.getElementById("Name").value;
+            console.log(name)
+            var warningInput = document.getElementById("WarningMessageAdmin");
+            if (name == "admin") {
+
+                warningInput.style.display = "block";
+                console.log(name + " display shown")
+            } else {
+                warningInput.style.display = "none";
+                console.log(name + " display hidden")
+            }
+
+ }
+
+
+
         document.addEventListener('DOMContentLoaded', function () {
 
             //get the messages and store to send use in  connection.invoke
@@ -97,9 +120,9 @@
             var name = prompt('Enter your Name and Room Number:', '');
 
             document.getElementById("Name").value = name; //pass to name input box
-          //  document.getElementById("WarningMessageShow").value = name; // warningInput;//pass it to the h2 box
 
 
+           
             // Set initial focus to message input box.
             messageInput.focus();
 
@@ -120,26 +143,26 @@
                 var encodedName = name;
                 var encodedMsg = message;
                 var encodedWarning = WarningMessageAdmin;
-                
-              //create a text element and pass the data to it then pass to text box
-                var text = document.createElement('text'); 
-             
-                text.innerHTML = encodedName + "   " + encodedMsg + " - " + encodedWarning;
+
+                //create a text element and pass the data to it then pass to text box
+                var text = document.createElement('text');
+
+                text.innerHTML = encodedName + "   " + encodedMsg;
                 document.getElementById('latestMessage').value = text.innerHTML;
 
-// Add the message to the page in a List Element
+                // Add the message to the page in a List Element
                 var liElement = document.createElement('li');
                 liElement.innerHTML = time + '&nbsp;&nbsp;<strong>' + encodedName + '</strong>:&nbsp;&nbsp;' + encodedMsg;
-            
+
                 document.getElementById('discussion').prepend(liElement);
 
                 //add the warning message to the relevent boxes
 
-                var warningMessageText = document.createElement('WarningMessageShow'); 
+                var warningMessageText = document.createElement('WarningMessageShow');
                 warningMessageText.innerHTML = encodedWarning
-               // document.getElementById('WarningMessage').value = WarningMessageAdmin;
+                // document.getElementById('WarningMessage').value = WarningMessageAdmin;
                 document.getElementById("WarningMessageShow").innerHTML = WarningMessageAdmin;//warningMessageText.innerHTML;
-               
+
             });
 
 
