@@ -1,46 +1,16 @@
-﻿<!DOCTYPE html>
-<html>
-<head>
-    <title>Vision College LockDown</title>
-    <link href="css/Style.css" rel="stylesheet" />
-
-
-</head>
-<body style="background-color: red">
-    <div class="container">
-        <h1>VC LockDown Alert</h1>
-        <h2 id="WarningMessageShow">Warning Message</h2>
-        <input type="text" onchange=hideWarningMessageAdmin() id="Name" hidden:true value="Name">
-        <input type="text" id="WarningMessageAdmin" hidden:true value="Add warning message">
-
-        <textarea id="message" class="textareastuff" rows="15"></textarea><br />
-
-
-        <input type="button" id="sendmessage" value="Send a message" /><br />
-<textarea id="latestMessage" class="lastMessage" rows="5" cols="33"></textarea>
-
-        <scroll-container>
-            <ul id="discussion"></ul>
-        </scroll-container>
-    </div>
-    <!--Script references. -->
-    <!--Reference the SignalR library. -->
-    <script type="text/javascript" src="lib/signalr.min.js"></script>
-    <!--Add script to update the page and send messages.-->
-    <script type="text/javascript">
-
+﻿     < !--Add script to update the page and send messages.-- >
+    
 
         function hideWarningMessageAdmin() {
-            let name1 = document.getElementById("Name").value;
-            let name = name1.trim(); //trim whitespace
+            var name = document.getElementById("Name").value;
             console.log(name)
             var warningInput = document.getElementById("WarningMessageAdmin");
             if (name == "admin") {
 
-                document.getElementById("WarningMessageAdmin").hidden = false;
+            document.getElementById("WarningMessageAdmin").hidden = false;
                 console.log(name + " display shown")
             } else {
-                warningInput.hidden = true;
+            warningInput.hidden = true;
                 console.log(name + " display hidden")
             }
 
@@ -55,12 +25,9 @@
             //get the messages and store to send use in  connection.invoke
             var messageInput = document.getElementById('message');
             var warningInput = document.getElementById('WarningMessageAdmin');
-            document.getElementById('latestMessage').value = "Most recent message"; //default
-            document.getElementById('message').value = "Type a message";  //default
 
             // Get the user name and store it to prepend to messages.
-            var name1 = prompt('Enter your Name and Room Number:', '');
-            let name = name1.trim(); //trim whitespace
+            var name = prompt('Enter your Name and Room Number:', '');
 
             document.getElementById("Name").value = name; //pass to name input box
 
@@ -113,10 +80,10 @@
             // Transport fallback functionality is now built into start.
             connection.start()
                 .then(function () {
-                    console.log('connection started');
+            console.log('connection started');
                     document.getElementById('sendmessage').addEventListener('click', function (event) {
-                        // Call the Send method on the hub. To make calls to the server, wire up an event to a button or other UI element, capture the data you want to send, and call the invoke method
-                        connection.invoke('send', name, messageInput.value, warningInput.value);
+            // Call the Send method on the hub. To make calls to the server, wire up an event to a button or other UI element, capture the data you want to send, and call the invoke method
+            connection.invoke('send', name, messageInput.value, warningInput.value);
 
                         // Clear text box and reset focus for next comment.
                         messageInput.value = '';
@@ -125,9 +92,7 @@
                     });
                 })
                 .catch(error => {
-                    console.error(error.message);
+            console.error(error.message);
                 });
         });
-    </script>
-</body>
-</html>
+    
