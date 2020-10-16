@@ -76,3 +76,6 @@ scroll-container {
 }
 
 
+.content-box {
+    columns: 3 auto;
+}
