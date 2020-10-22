@@ -1,22 +1,43 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-    <title>Vision College LockDown</title>
+    <title>Vision College Lockdown</title>
     <link href="css/Style.css" rel="stylesheet" />
 
 
 </head>
-<body style="background-color: red">
+<body style="background-color: red" onload="playAudio()">
     <div class="container">
-        <h1>VC LockDown Alert</h1>
+        <h1>VC Lockdown Alert</h1>
         <h2 id="WarningMessageShow">Warning Message</h2>
         <input type="text" onchange=hideWarningMessageAdmin() id="Name" hidden:true value="Name">
+
+        <audio id="myAudio">
+            <source src="Alarm.mp3" type="audio/mp3">
+        </audio>
+        <!--<input onclick="playAudio()" type="button" value="Play Alarm">-->
+        <input onclick="pauseAudio()" type="button" value="Stop Alarm">
+
+
+
         <input type="text" id="WarningMessageAdmin" hidden:true value="Add warning message">
 
-        <textarea id="message" class="textareastuff" rows="15"></textarea><br />
+        <label class="select" id="branchtext" hidden:true>Choose a Branch</label>
+
+        <select class="select" id="branch" onchange="ChangeURL()" hidden:true>
+            <option value="Hamilton" selected hidden:true>Hamilton</option>
+            <option value="Auckland" hidden:true>Auckland</option>
+            <option value="Christchurch" hidden:true>Christchurch</option>
+
+        </select>
 
 
-        <input type="text" id="RoomLockdown" value="room Locked down">
+
+        <p>Type any IMPORTANT messages about the situation</p>
+        <textarea id="message" class="textareastuff" rows="15"></textarea>
+
+        <p>Enter your room number / name where you are locked down</p>
+        <input type="text" id="RoomLockdown">
         <ul id="roomLockdownList" class="content-box"></ul>
 
 
@@ -26,10 +47,27 @@
         <scroll-container>
             <ul id="discussion"></ul>
         </scroll-container>
+        <scroll-container-lockdown>
+            <ul>
+                <li>Lock and/or barricade the door.</li>
+                <li>Silence your cell phone, including the vibrate feature.</li>
+                <li>Hide behind large objects if possible.</li>
+                <li>Remain very quiet and do not leave until directed by law enforcement officers.</li>
+                <li>
+                    Your hiding place should:
+                    <ul>
+                        <li><span style="color: #666666; ">Be out of the shooter’s view</span>.</li>
+                        <li><span style="color: #666666;">Provide protection if shots are fired in your direction</span></li>
+                        <li><span style="color: #666666; ">Do Not trap or restrict your options for movement</span></li>
+                    </ul>
+                </li>
+            </ul>
+        </scroll-container-lockdown>
     </div>
     <!--Script references. -->
     <!--Reference the SignalR library. -->
     <script type="text/javascript" src="lib/signalr.min.js"></script>
+    <!--<script type="text/javascript" src="js/mainjs.js"></script>-->
     <!--Add script to update the page and send messages.-->
     <script type="text/javascript">
 
@@ -42,18 +80,47 @@
             if (name == "admin") {
 
                 document.getElementById("WarningMessageAdmin").hidden = false;
+                document.getElementById("branch").hidden = false;
+                document.getElementById("branchtext").hidden = false;
                 console.log(name + " display shown")
             } else {
                 warningInput.hidden = true;
+                document.getElementById("branch").hidden = true;
+                document.getElementById("branchtext").hidden = true;
                 console.log(name + " display hidden")
             }
 
         }
 
 
+        //append the branch chosen to the url to send out admin only
+
+        function ChangeURL() {
+            var branch = document.getElementById("branch").value; //get the value
+            const urlParams = new URLSearchParams(window.location.search); //get the url
+            urlParams.set('branch', branch); //append
+            window.location.search = urlParams; //return it
+
+        }
+
+        //play alarm and pause Alarm
+
+        var x = document.getElementById("myAudio");
+
+        function playAudio() {
+            x.loop = true;
+            x.play();
+
+        }
+
+        function pauseAudio() {
+            x.pause();
+        }
+
+
         //DOMContentLoaded event – DOM is ready, so the handler can lookup DOM nodes, initialize the interface.
         document.addEventListener('DOMContentLoaded', function () {
-
+            playAudio();  //play alarm on load
             hideWarningMessageAdmin();
 
             //get the messages and store to send use in  connection.invoke
@@ -61,7 +128,7 @@
             var warningInput = document.getElementById('WarningMessageAdmin');
             var roomLockdown = document.getElementById('RoomLockdown');
             document.getElementById('latestMessage').value = "Most recent message"; //default
-            document.getElementById('message').value = "Type a message";  //default
+            //  document.getElementById('message').value = "Type a message";  //default
 
             // Get the user name and store it to prepend to messages.
             var name1 = prompt('Enter your Name and Room Number:', '');
@@ -110,7 +177,6 @@
                 }
                 //add the encodedRoomLockdown to the lockeddown list
 
-
                 if (encodedRoomLockdown != '') {
                     var liElement = document.createElement('li');
                     liElement.innerHTML = encodedRoomLockdown;
@@ -136,7 +202,7 @@
                     console.log('connection started');
                     document.getElementById('sendmessage').addEventListener('click', function (event) {
                         // Call the Send method on the hub. To make calls to the server, wire up an event to a button or other UI element, capture the data you want to send, and call the invoke method
-                        connection.invoke('send', name, messageInput.value, warningInput.value, roomLockdown.value );
+                        connection.invoke('send', name, messageInput.value, warningInput.value, roomLockdown.value);
 
                         // Clear text box and reset focus for next comment.
                         messageInput.value = '';

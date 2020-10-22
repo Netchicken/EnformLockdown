@@ -25,8 +25,11 @@ namespace LockDown
 
             app.UseFileServer();
 
+            //UseRouting adds route matching to the middleware pipeline. This middleware looks at the set of endpoints defined in the app, and selects the best match based on the request.  https://docs.microsoft.com/en-us/aspnet/core/fundamentals/routing?view=aspnetcore-3.1
             app.UseRouting();
 
+
+            //UseEndpoints adds endpoint execution to the middleware pipeline. It runs the delegate associated with the selected endpoint.
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapHub<LockDownHub>("/chat");

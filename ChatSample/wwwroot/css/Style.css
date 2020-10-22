@@ -15,7 +15,13 @@ input[type=text] {
     border: 0;
     box-shadow: 0 0 15px 4px rgba(198, 65, 65, 0.42);
     border-radius: 10px;
-   
+}
+
+.select {
+    padding: 10px;
+    border: 0;
+    box-shadow: 0 0 15px 4px rgba(198, 65, 65, 0.42);
+    border-radius: 10px;
 }
 
 .textareastuff {
@@ -51,8 +57,7 @@ input[type=text] {
 
 input[type=button] {
     /* remove default behavior */
-    appearance: none;
-    -webkit-appearance: none;
+       -webkit-appearance: none;
     /* usual styles */
     padding: 10px;
     border: none;
@@ -72,9 +77,14 @@ scroll-container {
     /*  width: 350px;*/
     height: 100px;
     overflow-y: scroll;
-    scroll-behavior: smooth;
 }
 
+scroll-container-lockdown {
+    display: block;
+    /*  width: 350px;*/
+    height: 150px;
+    overflow-y: scroll;
+}
 
 .content-box {
     columns: 3 auto;

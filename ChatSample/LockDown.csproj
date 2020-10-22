@@ -6,4 +6,8 @@
     <RootNamespace>LockDown</RootNamespace>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Remove="lockdown.html" />
+  </ItemGroup>
+
 </Project>
