@@ -22,10 +22,11 @@
 
         <input type="text" id="WarningMessageAdmin" hidden:true value="Add warning message">
 
-        <label class="select" id="branchtext" hidden:true>Choose a Branch</label>
+        <!--<label class="select" id="branchtext" hidden:true>Choose a Branch</label>-->
 
         <select class="select" id="branch" onchange="ChangeURL()" hidden:true>
-            <option value="Hamilton" selected hidden:true>Hamilton</option>
+            <option value="" hidden:true>Choose a Branch</option>
+            <option value="Hamilton" hidden:true>Hamilton</option>
             <option value="Auckland" hidden:true>Auckland</option>
             <option value="Christchurch" hidden:true>Christchurch</option>
 
@@ -42,7 +43,7 @@
 
 
         <input type="button" id="sendmessage" value="Send a message" /><br />
-<textarea id="latestMessage" class="lastMessage" rows="5" cols="33"></textarea>
+        <textarea id="latestMessage" class="lastMessage" rows="5" cols="33"></textarea>
 
         <scroll-container>
             <ul id="discussion"></ul>
