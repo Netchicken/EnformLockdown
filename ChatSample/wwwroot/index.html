@@ -5,8 +5,8 @@
     <link href="css/Style.css" rel="stylesheet" />
 
 
-</head>
-<body style="background-color: red" onload="playAudio()">
+</head><!--onload="playAudio()"-->
+<body style="background-color: red">
     <div class="container">
         <h1>VC Lockdown Alert</h1>
         <h2 id="WarningMessageShow">Warning Message</h2>
@@ -82,12 +82,12 @@
 
                 document.getElementById("WarningMessageAdmin").hidden = false;
                 document.getElementById("branch").hidden = false;
-                document.getElementById("branchtext").hidden = false;
+                //document.getElementById("branchtext").hidden = false;
                 console.log(name + " display shown")
             } else {
                 warningInput.hidden = true;
                 document.getElementById("branch").hidden = true;
-                document.getElementById("branchtext").hidden = true;
+                //document.getElementById("branchtext").hidden = true;
                 console.log(name + " display hidden")
             }
 
@@ -110,7 +110,7 @@
 
         function playAudio() {
             x.loop = true;
-            x.play();
+            //x.play();
 
         }
 
