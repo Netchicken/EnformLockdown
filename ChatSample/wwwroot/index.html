@@ -4,11 +4,12 @@
     <title>Vision College Lockdown</title>
     <link href="css/Style.css" rel="stylesheet" />
 
-
+    <!--ToDo extract out branches to text file
+        ToDo -->
 </head><!--onload="playAudio()"-->
-<body style="background-color: red">
+<body style="background-color: red" onload="playAudio()">
     <div class="container">
-        <h1>VC Lockdown Alert</h1>
+        <h1>Vison College Lockdown Alert</h1>
         <h2 id="WarningMessageShow">Warning Message</h2>
         <input type="text" onchange=hideWarningMessageAdmin() id="Name" hidden:true value="Name">
 
@@ -22,7 +23,6 @@
 
         <input type="text" id="WarningMessageAdmin" hidden:true value="Add warning message">
 
-        <!--<label class="select" id="branchtext" hidden:true>Choose a Branch</label>-->
 
         <select class="select" id="branch" onchange="ChangeURL()" hidden:true>
             <option value="" hidden:true>Choose a Branch</option>
@@ -37,7 +37,7 @@
         <p>Type any IMPORTANT messages about the situation</p>
         <textarea id="message" class="textareastuff" rows="15"></textarea>
 
-        <p>Enter your room number / name where you are locked down</p>
+        <p>Secured. Enter your room number / name where you are locked down</p>
         <input type="text" id="RoomLockdown">
         <ul id="roomLockdownList" class="content-box"></ul>
 
@@ -57,9 +57,9 @@
                 <li>
                     Your hiding place should:
                     <ul>
-                        <li><span style="color: #666666; ">Be out of the shooter’s view</span>.</li>
-                        <li><span style="color: #666666;">Provide protection if shots are fired in your direction</span></li>
-                        <li><span style="color: #666666; ">Do Not trap or restrict your options for movement</span></li>
+                        <li>Be out of the persons view.</li>
+                        <li>Provide protection if shots are fired in your direction</li>
+                        <li>Do Not trap or restrict your options for movement</li>
                     </ul>
                 </li>
             </ul>
@@ -106,21 +106,24 @@
 
         //play alarm and pause Alarm
 
-        var x = document.getElementById("myAudio");
+        var audio = document.getElementById("myAudio");
+
 
         function playAudio() {
-            x.loop = true;
-            //x.play();
+            audio.loop = true;
+
+            audio.play();
 
         }
 
         function pauseAudio() {
-            x.pause();
+            audio.pause();
         }
 
 
         //DOMContentLoaded event – DOM is ready, so the handler can lookup DOM nodes, initialize the interface.
         document.addEventListener('DOMContentLoaded', function () {
+            // triggerSoundOnMousemove();
             playAudio();  //play alarm on load
             hideWarningMessageAdmin();
 
