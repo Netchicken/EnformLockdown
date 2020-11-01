@@ -4,8 +4,8 @@
     <title>Vision College Lockdown</title>
     <link href="css/Style.css" rel="stylesheet" />
 
-    <!--ToDo extract out branches to text file
-        ToDo -->
+    <!--ToDo extract out branches to text file-->
+    <!--ToDo Admin? single user? Password?-->
 </head><!--onload="playAudio()"-->
 <body style="background-color: red" onload="playAudio()">
     <div class="container">
@@ -16,10 +16,11 @@
         <audio id="myAudio">
             <source src="Alarm.mp3" type="audio/mp3">
         </audio>
-        <!--<input onclick="playAudio()" type="button" value="Play Alarm">-->
+        <!--  <a href="lockdown.html">Lockdown Page example</a> -->
+        <input type="button" value="Lockdown Page example" onclick="window.open('lockdown.html', '_blank');" />
+
+
         <input onclick="pauseAudio()" type="button" value="Stop Alarm">
-
-
 
         <input type="text" id="WarningMessageAdmin" hidden:true value="Add warning message">
 
