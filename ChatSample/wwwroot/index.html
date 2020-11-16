@@ -9,7 +9,7 @@
 </head><!--onload="playAudio()"style="background-color: red"-->
 <body onload="playAudio()">
     <div class="container">
-        <h1>Vison College Lockdown Alert</h1>
+        <h1>Vision College Lockdown Alert</h1>
         <h2 id="WarningMessageShow">Warning Message</h2>
         <input type="text" onchange=hideWarningMessageAdmin() id="Name" hidden:true value="Name">
 
@@ -81,7 +81,7 @@
             let name = name1.trim(); //trim whitespace
             console.log(name)
             var warningInput = document.getElementById("WarningMessageAdmin");
-            if (name == "admin") {
+            if (name === "admin") {
                 document.getElementById("lockdownPageTest").hidden = false;
                 document.getElementById("WarningMessageAdmin").hidden = false;
                 document.getElementById("branch").hidden = false;
@@ -101,7 +101,7 @@
 
         function ChangeURL() {
             var branch = document.getElementById("branch").value; //get the value
-            const urlParams = new URLSearchParams(window.location.search); //get the url
+            var urlParams = new URLSearchParams(window.location.search); //get the url
             urlParams.set('branch', branch); //append
             window.location.search = urlParams; //return it
 
@@ -167,7 +167,7 @@
                 var encodedRoomLockdown = RoomLockdown;
 
 
-                if (encodedMsg != '') {
+                if (encodedMsg !== '') {
 
                     //create a text element and pass the data to it then pass to text box
                     var text = document.createElement('text');
@@ -184,7 +184,7 @@
                 }
                 //add the encodedRoomLockdown to the lockeddown list
 
-                if (encodedRoomLockdown != '') {
+                if (encodedRoomLockdown !== '') {
                     var liElement = document.createElement('li');
                     liElement.innerHTML = encodedRoomLockdown;
 

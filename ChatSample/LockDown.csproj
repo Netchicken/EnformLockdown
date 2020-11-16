@@ -4,10 +4,15 @@
     <TargetFramework>netcoreapp3.0</TargetFramework>
     <AssemblyName>LockDown</AssemblyName>
     <RootNamespace>LockDown</RootNamespace>
+    <UserSecretsId>0b68f28d-a103-4e6a-99d0-0dcd68f3d7cc</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
     <None Remove="lockdown.html" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Azure.SignalR" Version="1.4.0" />
   </ItemGroup>
 
 </Project>
