@@ -1,7 +1,15 @@
-﻿
+﻿html {
+    background: url(../stripes.png) no-repeat center center fixed;
+    background-size: cover;
+}
+
+body, html {
+    height: 100%;
+    margin: 0;
+}
+
 .container {
-    background-color: white; /*#3f9ad6;*/
-    ;
+    background-color: white;
     box-shadow: 0 0 15px 4px #3f9ad6;
     border-radius: 10px;
     padding-left: 20px;
@@ -57,7 +65,7 @@ input[type=text] {
 
 input[type=button] {
     /* remove default behavior */
-       -webkit-appearance: none;
+    -webkit-appearance: none;
     /* usual styles */
     padding: 10px;
     border: none;

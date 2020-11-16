@@ -5,9 +5,9 @@
     <link href="css/Style.css" rel="stylesheet" />
 
     <!--ToDo extract out branches to text file-->
-    <!--ToDo Admin? single user? Password?-->
-</head><!--onload="playAudio()"-->
-<body style="background-color: red" onload="playAudio()">
+    <!--ToDo Admin? single user Password?-->
+</head><!--onload="playAudio()"style="background-color: red"-->
+<body onload="playAudio()">
     <div class="container">
         <h1>Vison College Lockdown Alert</h1>
         <h2 id="WarningMessageShow">Warning Message</h2>
@@ -16,8 +16,6 @@
         <audio id="myAudio">
             <source src="Alarm.mp3" type="audio/mp3">
         </audio>
-        <!--  <a href="lockdown.html">Lockdown Page example</a> -->
-        <input type="button" value="Lockdown Page example" onclick="window.open('lockdown.html', '_blank');" />
 
 
         <input onclick="pauseAudio()" type="button" value="Stop Alarm">
@@ -29,16 +27,20 @@
             <option value="" hidden:true>Choose a Branch</option>
             <option value="Hamilton" hidden:true>Hamilton</option>
             <option value="Auckland" hidden:true>Auckland</option>
+            <option value="Pukekohe" hidden:true>Auckland</option>
             <option value="Christchurch" hidden:true>Christchurch</option>
 
         </select>
+
+        <!--  <a href="lockdown.html">Lockdown Page example</a> -->
+        <input type="button" hidden:true id="lockdownPageTest" onclick="window.open('lockdown.html', '_blank');" value="Lockdown Page example" />
 
 
 
         <p>Type any IMPORTANT messages about the situation</p>
         <textarea id="message" class="textareastuff" rows="15"></textarea>
 
-        <p>Secured. Enter your room number / name where you are locked down</p>
+        <p>Secured. Enter your room number / name when you are locked down</p>
         <input type="text" id="RoomLockdown">
         <ul id="roomLockdownList" class="content-box"></ul>
 
@@ -80,7 +82,7 @@
             console.log(name)
             var warningInput = document.getElementById("WarningMessageAdmin");
             if (name == "admin") {
-
+                document.getElementById("lockdownPageTest").hidden = false;
                 document.getElementById("WarningMessageAdmin").hidden = false;
                 document.getElementById("branch").hidden = false;
                 //document.getElementById("branchtext").hidden = false;
