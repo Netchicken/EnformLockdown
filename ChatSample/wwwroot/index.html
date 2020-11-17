@@ -7,7 +7,8 @@
     <!--ToDo extract out branches to text file-->
     <!--ToDo Admin? single user Password?-->
 </head><!--onload="playAudio()"style="background-color: red"-->
-<body onload="playAudio()">
+ <!--onload="playAudio()"-->
+<body>
     <div class="container">
         <h1>Vision College Lockdown Alert</h1>
         <h2 id="WarningMessageShow">Warning Message</h2>
@@ -18,7 +19,7 @@
         </audio>
 
 
-        <input onclick="pauseAudio()" type="button" value="Stop Alarm">
+
 
         <input type="text" id="WarningMessageAdmin" hidden:true value="Add warning message">
 
@@ -32,8 +33,7 @@
 
         </select>
 
-        <!--  <a href="lockdown.html">Lockdown Page example</a> -->
-        <input type="button" hidden:true id="lockdownPageTest" onclick="window.open('lockdown.html', '_blank');" value="Lockdown Page example" />
+
 
 
 
@@ -67,6 +67,9 @@
                 </li>
             </ul>
         </scroll-container-lockdown>
+        <input onclick="pauseAudio()" type="button" value="Stop Alarm"> <br />
+        <!--  <a href="lockdown.html">Lockdown Page example</a> -->
+        <input type="button" hidden:true id="lockdownPageTest" onclick="window.open('lockdown.html', '_blank');" value="Lockdown Page example" />
     </div>
     <!--Script references. -->
     <!--Reference the SignalR library. -->

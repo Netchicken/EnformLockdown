@@ -1,4 +1,110 @@
-﻿
+﻿/* If the screen size is 400px wide or less, set the font-size of <div> to 30px */
+@media screen and (max-width: 400px) {
+    
+    input[type=text] {
+      /*  padding: 10px;*/
+        border: 0;
+        box-shadow: 0 0 15px 4px rgba(198, 65, 65, 0.42);
+        border-radius: 10px;
+    }
+
+
+    .container {
+        background-color: white;
+        box-shadow: 0 0 15px 4px #3f9ad6;
+        border-radius: 10px;
+       /* padding-left: 20px;
+        padding-right: 20px;
+        padding-bottom: 20px;
+        margin: 20px;*/
+        font-size: 2vw;
+    }
+
+
+
+    .select {
+        /*padding: 10px;*/
+        border: 0;
+        box-shadow: 0 0 15px 4px rgba(198, 65, 65, 0.42);
+        border-radius: 10px;
+    }
+
+    .textareastuff {
+        margin-top: 20px;
+        margin-bottom: 20px;
+       /* margin-right: 20px;*/
+        width: 90%;
+        display: block;
+        resize: both;
+       /* padding: 10px;*/
+        border: 0;
+        box-shadow: 0 0 15px 4px rgba(198, 65, 65, 0.42);
+        border-radius: 10px;
+       height: 20px;
+    }
+
+    .lastMessage {
+        margin-top: 10px;
+        margin-bottom: 10px;
+       /* margin-right: 20px;*/
+        background-color: antiquewhite;
+        color: rgba(230, 39, 35, 0.86);
+        font-weight: bolder;
+      /*  font-size: larger;*/
+       width: 90%;
+        resize: both;
+       /* padding: 10px;*/
+        border: 0;
+        box-shadow: 0 0 15px 4px rgba(198, 65, 65, 0.42);
+        border-radius: 10px;
+        height: 20px;
+    }
+
+    input[type=button] {
+        /* remove default behavior */
+        -webkit-appearance: none;
+        /* usual styles */
+      /*  padding: 10px;*/
+        border: none;
+        background-color: rgba(230, 39, 35, 0.86);
+        color: #fff;
+        font-weight: 600;
+        border-radius: 5px;
+    }
+
+    scroll-container {
+        display: block;
+        /*  width: 350px;
+        height: 100px;*/
+        overflow-y: scroll;
+    }
+
+
+
+
+}
+
+
+
+
+
+
+/* If the screen size is 601px wide or more, set the font-size of <div> to 80px */
+@media screen and (min-width: 401px) {
+ 
+
+
+
+
+   input[type=text] {
+    padding: 10px;
+    border: 0;
+    box-shadow: 0 0 15px 4px rgba(198, 65, 65, 0.42);
+    border-radius: 10px;
+
+   }
+
+
 
 html {
     background: url(../stripes.png) no-repeat center center fixed;
@@ -21,12 +127,7 @@ body, html {
     font-size: 2vw;
 }
 
-input[type=text] {
-    padding: 10px;
-    border: 0;
-    box-shadow: 0 0 15px 4px rgba(198, 65, 65, 0.42);
-    border-radius: 10px;
-}
+
 
 .select {
     padding: 10px;
@@ -83,12 +184,24 @@ h1 {
     color: #3f9ad6;
 }
 
-scroll-container {
-    display: block;
-    /*  width: 350px;*/
-    height: 100px;
-    overflow-y: scroll;
+
+
+
+    scroll-container {
+        display: block;
+        /*  width: 350px;*/
+        height: 100px;
+        overflow-y: scroll;
+    }
+
 }
+
+
+.content-box {
+    columns: 3 auto;
+}
+
+
 
 scroll-container-lockdown {
     display: block;
@@ -97,6 +210,5 @@ scroll-container-lockdown {
     overflow-y: scroll;
 }
 
-.content-box {
-    columns: 3 auto;
-}
+
+
