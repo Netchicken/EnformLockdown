@@ -7,11 +7,11 @@
     <!--ToDo extract out branches to text file-->
     <!--ToDo Admin? single user Password?-->
 </head><!--onload="playAudio()"style="background-color: red"-->
- <!--onload="playAudio()"-->
+ 
 <body>
     <div class="container">
         <h1>Vision College Lockdown Alert</h1>
-        <h2 id="WarningMessageShow">Warning Message</h2>
+        <!--   <h2 id="WarningMessageShow">Warning Message</h2>-->
         <input type="text" onchange="hideWarningMessageAdmin()" id="Name" hidden:true value="Name">
 
         <audio id="myAudio">
@@ -21,7 +21,7 @@
 
 
 
-        <input type="text" id="WarningMessageAdmin" onchange="updateWarningMessageShow()" hidden:true value="Add warning message">
+        <!-- <input type="text" id="WarningMessageAdmin" onchange="updateWarningMessageShow()" hidden:true value="Add warning message">-->
 
 
         <select class="select" id="branch" onchange="ChangeURL()" hidden:true>
@@ -34,19 +34,19 @@
         </select>
 
 
-
-
-
         <p>Type any IMPORTANT messages about the situation</p>
         <textarea id="message" class="textareastuff" rows="15"></textarea>
+        <textarea id="latestMessage" class="lastMessage" rows="9" cols="33"></textarea>
+
 
         <p>Secured. Enter your room number / name when you are locked down</p>
         <input type="text" id="RoomLockdown" onchange="EnterKeyHit">
+        <input type="button" id="sendmessage" value="Secured" /><br />
         <ul id="roomLockdownList" class="content-box"></ul>
 
 
-        <input type="button" id="sendmessage" value="Send a message" /><br />
-        <textarea id="latestMessage" class="lastMessage" rows="5" cols="33"></textarea>
+
+
 
         <scroll-container>
             <ul id="discussion"></ul>
@@ -89,13 +89,13 @@
             //admin lockout
             if (name === "admin") {
                 document.getElementById("lockdownPageTest").hidden = false;
-                document.getElementById("WarningMessageAdmin").hidden = false;
+               // document.getElementById("WarningMessageAdmin").hidden = false;
                 document.getElementById("branch").hidden = false;
                 //document.getElementById("branchtext").hidden = false;
                 console.log(name + " display shown");
             } else {
               //  warningInput.hidden = true;
-              document.getElementById("WarningMessageAdmin").hidden = true;
+              //document.getElementById("WarningMessageAdmin").hidden = true;
                 document.getElementById("branch").hidden = true;
                 //document.getElementById("branchtext").hidden = true;
                 console.log(name + " display hidden");
@@ -104,9 +104,9 @@
         }
 
         function updateWarningMessageShow() {
-            console.log("updateWarningMessageShow 1", document.getElementById('WarningMessageAdmin').value );
+          //  console.log("updateWarningMessageShow 1", document.getElementById('WarningMessageAdmin').value );
             document.getElementById('WarningMessageShow').innerHTML = document.getElementById('WarningMessageAdmin').value;
-            console.log("updateWarningMessageShow 2", document.getElementById('WarningMessageShow').innerHTML );
+          //  console.log("updateWarningMessageShow 2", document.getElementById('WarningMessageShow').innerHTML );
         }
 
 
@@ -148,7 +148,7 @@
             //get the messages and store to send use in  connection.invoke
             var messageInput = document.getElementById('message');
 
-            var warningMessage = document.getElementById('WarningMessageShow').value;
+            var warningMessage = "";// document.getElementById('WarningMessageShow').value;
 
            
            
@@ -172,18 +172,18 @@
                 .build();
 
             // Create a function that the hub can call to broadcast messages. The on method allows the server to call the code in it directly. Here’s where the UI is updated – in this case, simply adding messages to a list item. It’s a good practice to encode the data
-            connection.on('broadcastMessage', function (name, message, WarningMessage, RoomLockdown) {
+            connection.on('broadcastMessage', function (name, message, warningMessage, roomLockdown) {
 
                 //time to add to list
                 var today = new Date();
                 var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
 
-                console.log("Warning message",WarningMessage);
+                console.log("Warning message",warningMessage);
                 // Html encode display name and message.
                 var encodedName = name;
                 var encodedMsg = message;
-                var encodedWarning = WarningMessage;
-                var encodedRoomLockdown = RoomLockdown;
+                var encodedWarning = warningMessage;
+                var encodedRoomLockdown = roomLockdown;
 
 
                 if (encodedMsg !== '') {
@@ -211,6 +211,12 @@
 
                 }
 
+
+
+
+
+
+
                 //add the warning message to the relevent boxes
         
               //  var warningMessageText = document.createElement('WarningMessageShow');
@@ -218,16 +224,16 @@
                 console.log("encoded Warning message", encodedWarning);
 
                 // if the text on the button === the warning message  "Add Warning message"
-                if (document.getElementById('WarningMessageAdmin').value === encodedWarning) {
+              //  if (document.getElementById('WarningMessageAdmin').value === encodedWarning) {
                    // document.getElementById("WarningMessageShow").innerHTML = WarningMessageAdmin;
-                    document.getElementById("WarningMessageShow").innerHTML = "Bloop";
+              //      document.getElementById("WarningMessageShow").innerHTML = "Bloop";
 
-                    console.log("bloop");
+             //       console.log("bloop");
 
-                   } else {
-                    document.getElementById("WarningMessageShow").innerHTML = encodedWarning;
-                    console.log("encoded Warning message Show", encodedWarning);
-               }
+             //      } else {
+             //       document.getElementById("WarningMessageShow").innerHTML = encodedWarning;
+             //       console.log("encoded Warning message Show", encodedWarning);
+             //  }
 
 
 
@@ -260,7 +266,8 @@
                         //run from hitting the enter key in the textarea id-'message'
                         //https://www.techiedelight.com/trigger-button-click-on-enter-key-javascript/#:~:text=In%20plain%20JavaScript%2C%20the%20idea,event%20on%20Enter%20key%20press.
 
-                        document.getElementById('message').addEventListener('keyup',
+                    document.getElementById('message').addEventListener('keyup',
+                 //   document.querySelectorAll('message,').addEventListener('keyup',
                             function(event) {
 
                                 if (event.keyCode === 13) {
