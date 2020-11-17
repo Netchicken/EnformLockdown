@@ -1,7 +1,7 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-    <title>Vision College Lockdown</title>
+    <title>Vision College Lockdown Alert Communicator</title>
     <link href="css/Style.css" rel="stylesheet" />
 
     <!--ToDo extract out branches to text file-->
@@ -12,7 +12,7 @@
     <div class="container">
         <h1>Vision College Lockdown Alert</h1>
         <h2 id="WarningMessageShow">Warning Message</h2>
-        <input type="text" onchange=hideWarningMessageAdmin() id="Name" hidden:true value="Name">
+        <input type="text" onchange="hideWarningMessageAdmin()" id="Name" hidden:true value="Name">
 
         <audio id="myAudio">
             <source src="Alarm.mp3" type="audio/mp3">
@@ -21,7 +21,7 @@
 
 
 
-        <input type="text" id="WarningMessageAdmin" hidden:true value="Add warning message">
+        <input type="text" id="WarningMessageAdmin" onchange="updateWarningMessageShow()" hidden:true value="Add warning message">
 
 
         <select class="select" id="branch" onchange="ChangeURL()" hidden:true>
@@ -41,7 +41,7 @@
         <textarea id="message" class="textareastuff" rows="15"></textarea>
 
         <p>Secured. Enter your room number / name when you are locked down</p>
-        <input type="text" id="RoomLockdown">
+        <input type="text" id="RoomLockdown" onchange="EnterKeyHit">
         <ul id="roomLockdownList" class="content-box"></ul>
 
 
@@ -67,7 +67,7 @@
                 </li>
             </ul>
         </scroll-container-lockdown>
-        <input onclick="pauseAudio()" type="button" value="Stop Alarm"> <br />
+        <!--<input onclick="pauseAudio()" type="button" value="Stop Alarm"> <br />-->
         <!--  <a href="lockdown.html">Lockdown Page example</a> -->
         <input type="button" hidden:true id="lockdownPageTest" onclick="window.open('lockdown.html', '_blank');" value="Lockdown Page example" />
     </div>
@@ -80,23 +80,33 @@
 
         //hide or shw the warning message if the user is admin
         function hideWarningMessageAdmin() {
-            let name1 = document.getElementById("Name").value;
-            let name = name1.trim(); //trim whitespace
-            console.log(name)
-            var warningInput = document.getElementById("WarningMessageAdmin");
+            var name1 = document.getElementById("Name").value;
+            var name = name1.trim(); //trim whitespace
+            console.log(name);
+
+          
+
+            //admin lockout
             if (name === "admin") {
                 document.getElementById("lockdownPageTest").hidden = false;
                 document.getElementById("WarningMessageAdmin").hidden = false;
                 document.getElementById("branch").hidden = false;
                 //document.getElementById("branchtext").hidden = false;
-                console.log(name + " display shown")
+                console.log(name + " display shown");
             } else {
-                warningInput.hidden = true;
+              //  warningInput.hidden = true;
+              document.getElementById("WarningMessageAdmin").hidden = true;
                 document.getElementById("branch").hidden = true;
                 //document.getElementById("branchtext").hidden = true;
-                console.log(name + " display hidden")
+                console.log(name + " display hidden");
             }
 
+        }
+
+        function updateWarningMessageShow() {
+            console.log("updateWarningMessageShow 1", document.getElementById('WarningMessageAdmin').value );
+            document.getElementById('WarningMessageShow').innerHTML = document.getElementById('WarningMessageAdmin').value;
+            console.log("updateWarningMessageShow 2", document.getElementById('WarningMessageShow').innerHTML );
         }
 
 
@@ -130,19 +140,25 @@
         //DOMContentLoaded event – DOM is ready, so the handler can lookup DOM nodes, initialize the interface.
         document.addEventListener('DOMContentLoaded', function () {
             // triggerSoundOnMousemove();
-            playAudio();  //play alarm on load
+          //  playAudio();  //play alarm on load
             hideWarningMessageAdmin();
 
+            //passes though to broadcast
+         
             //get the messages and store to send use in  connection.invoke
             var messageInput = document.getElementById('message');
-            var warningInput = document.getElementById('WarningMessageAdmin');
+
+            var warningMessage = document.getElementById('WarningMessageShow').value;
+
+           
+           
             var roomLockdown = document.getElementById('RoomLockdown');
             document.getElementById('latestMessage').value = "Most recent message"; //default
             //  document.getElementById('message').value = "Type a message";  //default
 
             // Get the user name and store it to prepend to messages.
             var name1 = prompt('Enter your Name and Room Number:', '');
-            let name = name1.trim(); //trim whitespace
+            var name = name1.trim(); //trim whitespace
             document.getElementById("Name").value = name; //pass to name input box
 
 
@@ -156,17 +172,17 @@
                 .build();
 
             // Create a function that the hub can call to broadcast messages. The on method allows the server to call the code in it directly. Here’s where the UI is updated – in this case, simply adding messages to a list item. It’s a good practice to encode the data
-            connection.on('broadcastMessage', function (name, message, WarningMessageAdmin, RoomLockdown) {
+            connection.on('broadcastMessage', function (name, message, WarningMessage, RoomLockdown) {
 
                 //time to add to list
                 var today = new Date();
                 var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
 
-                console.log(WarningMessageAdmin);
+                console.log("Warning message",WarningMessage);
                 // Html encode display name and message.
                 var encodedName = name;
                 var encodedMsg = message;
-                var encodedWarning = WarningMessageAdmin;
+                var encodedWarning = WarningMessage;
                 var encodedRoomLockdown = RoomLockdown;
 
 
@@ -196,11 +212,29 @@
                 }
 
                 //add the warning message to the relevent boxes
+        
+              //  var warningMessageText = document.createElement('WarningMessageShow');
 
-                var warningMessageText = document.createElement('WarningMessageShow');
-                warningMessageText.innerHTML = encodedWarning
+                console.log("encoded Warning message", encodedWarning);
+
+                // if the text on the button === the warning message  "Add Warning message"
+                if (document.getElementById('WarningMessageAdmin').value === encodedWarning) {
+                   // document.getElementById("WarningMessageShow").innerHTML = WarningMessageAdmin;
+                    document.getElementById("WarningMessageShow").innerHTML = "Bloop";
+
+                    console.log("bloop");
+
+                   } else {
+                    document.getElementById("WarningMessageShow").innerHTML = encodedWarning;
+                    console.log("encoded Warning message Show", encodedWarning);
+               }
+
+
+
+
+               // warningMessageText.innerHTML = encodedWarning;
                 // document.getElementById('WarningMessage').value = WarningMessageAdmin;
-                document.getElementById("WarningMessageShow").innerHTML = WarningMessageAdmin;//warningMessageText.innerHTML;
+              //  document.getElementById("WarningMessageShow").innerHTML = WarningMessageAdmin;//warningMessageText.innerHTML;
 
             });
 
@@ -208,20 +242,43 @@
 
             // Transport fallback functionality is now built into start.
             connection.start()
-                .then(function () {
-                    console.log('connection started');
-                    document.getElementById('sendmessage').addEventListener('click', function (event) {
-                        // Call the Send method on the hub. To make calls to the server, wire up an event to a button or other UI element, capture the data you want to send, and call the invoke method
-                        connection.invoke('send', name, messageInput.value, warningInput.value, roomLockdown.value);
+                .then(function() {
+                        console.log('connection started');
+                        document.getElementById('sendmessage').addEventListener('click',
+                            function(event) {
+                                // Call the Send method on the hub. To make calls to the server, wire up an event to a button or other UI element, capture the data you want to send, and call the invoke method
+                                connection.invoke('send', name, messageInput.value, warningMessage, roomLockdown.value);
 
-                        // Clear text box and reset focus for next comment.
-                        messageInput.value = '';
-                        roomLockdown.value = '';
-                        messageInput.focus();
-                        event.preventDefault();
-                    });
-                })
-                .catch(error => {
+                                // Clear text box and reset focus for next comment.
+                                messageInput.value = '';
+                                roomLockdown.value = '';
+                                messageInput.focus();
+                                event.preventDefault();
+                            });
+
+
+                        //run from hitting the enter key in the textarea id-'message'
+                        //https://www.techiedelight.com/trigger-button-click-on-enter-key-javascript/#:~:text=In%20plain%20JavaScript%2C%20the%20idea,event%20on%20Enter%20key%20press.
+
+                        document.getElementById('message').addEventListener('keyup',
+                            function(event) {
+
+                                if (event.keyCode === 13) {
+                                   
+                                    console.log('Enter key triggered');
+                                    // Call the Send method on the hub. To make calls to the server, wire up an event to a button or other UI element, capture the data you want to send, and call the invoke method
+                                    connection.invoke('send', name, messageInput.value, warningMessage, roomLockdown.value);
+
+                                    // Clear text box and reset focus for next comment.
+                                    messageInput.value = '';
+                                    roomLockdown.value = '';
+                                    messageInput.focus();
+                                    event.preventDefault();
+                                };
+                            });
+
+                    })
+                    .catch(error => {
                     console.error(error.message);
                 });
         });
